@@ -169,9 +169,6 @@ func (f *File) SectionContains(rva uint32, section *Section) bool {
 	}
 	vaAdj := f.adjustSectionAlignment(section.VirtualAddress)
 
-	// Check whether there's any section after the current one that starts before
-	// the calculated end for the current one. If so, cut the current section's
-	// size to fit in the range up to where the next section starts.
 	if f.NextHeaderAddr(section) != 0 && f.NextHeaderAddr(section) > section.VirtualAddress &&
 		vaAdj+size > f.NextHeaderAddr(section) {
 		size = f.NextHeaderAddr(section) - vaAdj
@@ -180,7 +177,6 @@ func (f *File) SectionContains(rva uint32, section *Section) bool {
 	return vaAdj <= rva && rva < vaAdj+size
 }
 
-// NextHeaderAddr returns the VirtualAddress of the next section.
 func (f *File) NextHeaderAddr(section *Section) uint32 {
 	for i, currentSection := range f.Sections {
 		if i == len(f.Sections)-1 {
@@ -195,10 +191,8 @@ func (f *File) NextHeaderAddr(section *Section) uint32 {
 }
 
 func (f *File) structUnpack(iface interface{}, offset, size uint32) (err error) {
-	// Boundary check
 	totalSize := offset + size
 
-	// Integer overflow
 	if (totalSize > offset) != (size > 0) {
 		return ErrOutsideBoundary
 	}

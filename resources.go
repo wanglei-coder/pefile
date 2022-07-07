@@ -144,7 +144,6 @@ func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs [
 				ID:        entryID,
 				Directory: *directoryEntry})
 		} else {
-			// data is entry
 			dataEntryStruct, err := f.parseResourceDataEntry(baseRVA + OffsetToDirectory)
 			if err != nil {
 				continue

@@ -10,7 +10,7 @@ func TestFile_RichHeaderHash(t *testing.T) {
 		want string
 	}{
 		{
-			name: "test/Notepad.exe",
+			name: "testfile/Notepad.exe",
 			want: "d4402332a00c5ffa64df7c83ee613640",
 		},
 	}

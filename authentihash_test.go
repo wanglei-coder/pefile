@@ -11,7 +11,7 @@ func TestFile_Authentihash(t *testing.T) {
 		want string
 	}{
 		{
-			name: "test/Notepad.exe",
+			name: "testfile/Notepad.exe",
 			want: "402fa6723792c15707f74a0326129b3b631de762c6181775091ae63ff201607f",
 		},
 	}

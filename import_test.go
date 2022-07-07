@@ -11,7 +11,7 @@ func TestFile_ImpHash(t *testing.T) {
 		want string
 	}{
 		{
-			name: "test/Notepad.exe",
+			name: "testfile/Notepad.exe",
 			want: "0e704f5a960ed2d2941bb74a20316b25",
 		},
 	}
