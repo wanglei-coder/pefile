@@ -1,0 +1,303 @@
+package pe
+
+import (
+	"strings"
+)
+
+func GetSubLangNameForLang(langValue, subLangValue uint32) string {
+	langName, found := Language[langValue]
+	if !found {
+		langName = "*unknown*"
+	}
+
+	subLangNames, found := SubLanguage[subLangValue]
+	if !found {
+		subLangNames = []string{}
+	}
+
+	for _, subLangName := range subLangNames {
+		if strings.Contains(subLangName, langName) {
+			return strings.Replace(subLangName, "SUBLANG_", "", -1)
+		}
+	}
+
+	subLangNames, found = SubLanguage[subLangValue]
+	if !found {
+		subLangNames = []string{"*unknown*"}
+	}
+
+	return strings.Replace(subLangNames[0], "SUBLANG_", "", -1)
+}
+
+var Language = map[uint32]string{
+	0:   "LANG_NEUTRAL",
+	1:   "LANG_ARABIC",
+	2:   "LANG_BULGARIAN",
+	3:   "LANG_CATALAN",
+	4:   "LANG_CHINESE",
+	5:   "LANG_CZECH",
+	6:   "LANG_DANISH",
+	7:   "LANG_GERMAN",
+	8:   "LANG_GREEK",
+	9:   "LANG_ENGLISH",
+	10:  "LANG_SPANISH",
+	11:  "LANG_FINNISH",
+	12:  "LANG_FRENCH",
+	13:  "LANG_HEBREW",
+	14:  "LANG_HUNGARIAN",
+	15:  "LANG_ICELANDIC",
+	16:  "LANG_ITALIAN",
+	17:  "LANG_JAPANESE",
+	18:  "LANG_KOREAN",
+	19:  "LANG_DUTCH",
+	20:  "LANG_NORWEGIAN",
+	21:  "LANG_POLISH",
+	22:  "LANG_PORTUGUESE",
+	23:  "LANG_RHAETO_ROMANCE",
+	24:  "LANG_ROMANIAN",
+	25:  "LANG_RUSSIAN",
+	26:  "LANG_SERBIAN",
+	27:  "LANG_SLOVAK",
+	28:  "LANG_ALBANIAN",
+	29:  "LANG_SWEDISH",
+	30:  "LANG_THAI",
+	31:  "LANG_TURKISH",
+	32:  "LANG_URDU",
+	33:  "LANG_INDONESIAN",
+	34:  "LANG_UKRAINIAN",
+	35:  "LANG_BELARUSIAN",
+	36:  "LANG_SLOVENIAN",
+	37:  "LANG_ESTONIAN",
+	38:  "LANG_LATVIAN",
+	39:  "LANG_LITHUANIAN",
+	40:  "LANG_MAORI",
+	41:  "LANG_FARSI",
+	42:  "LANG_VIETNAMESE",
+	43:  "LANG_ARMENIAN",
+	44:  "LANG_AZERI",
+	45:  "LANG_BASQUE",
+	46:  "LANG_SORBIAN",
+	47:  "LANG_MACEDONIAN",
+	48:  "LANG_SUTU",
+	49:  "LANG_TSONGA",
+	50:  "LANG_TSWANA",
+	51:  "LANG_VENDA",
+	52:  "LANG_XHOSA",
+	53:  "LANG_ZULU",
+	54:  "LANG_AFRIKAANS",
+	55:  "LANG_GEORGIAN",
+	56:  "LANG_FAEROESE",
+	57:  "LANG_HINDI",
+	58:  "LANG_MALTESE",
+	59:  "LANG_SAAMI",
+	60:  "LANG_GAELIC",
+	62:  "LANG_MALAY",
+	63:  "LANG_KAZAK",
+	64:  "LANG_KYRGYZ",
+	65:  "LANG_SWAHILI",
+	67:  "LANG_UZBEK",
+	68:  "LANG_TATAR",
+	69:  "LANG_BENGALI",
+	70:  "LANG_PUNJABI",
+	71:  "LANG_GUJARATI",
+	72:  "LANG_ORIYA",
+	73:  "LANG_TAMIL",
+	74:  "LANG_TELUGU",
+	75:  "LANG_KANNADA",
+	76:  "LANG_MALAYALAM",
+	77:  "LANG_ASSAMESE",
+	78:  "LANG_MARATHI",
+	79:  "LANG_SANSKRIT",
+	80:  "LANG_MONGOLIAN",
+	86:  "LANG_GALICIAN",
+	87:  "LANG_KONKANI",
+	88:  "LANG_MANIPURI",
+	89:  "LANG_SINDHI",
+	90:  "LANG_SYRIAC",
+	96:  "LANG_KASHMIRI",
+	97:  "LANG_NEPALI",
+	101: "LANG_DIVEHI",
+	127: "LANG_INVARIANT",
+	143: "LANG_ESPERANTO",
+	144: "LANG_WALON",
+	145: "LANG_CORNISH",
+	146: "LANG_WELSH",
+	147: "LANG_BRETON",
+}
+
+var SubLanguage = map[uint32][]string{
+	0: {"SUBLANG_NEUTRAL"},
+	1: {"SUBLANG_DEFAULT",
+		"SUBLANG_ARABIC_SAUDI_ARABIA",
+		"SUBLANG_AZERI_LATIN",
+		"SUBLANG_CHINESE_TRADITIONAL",
+		"SUBLANG_DUTCH",
+		"SUBLANG_ENGLISH_US",
+		"SUBLANG_FRENCH",
+		"SUBLANG_GERMAN",
+		"SUBLANG_ITALIAN",
+		"SUBLANG_KOREAN",
+		"SUBLANG_LITHUANIAN",
+		"SUBLANG_MALAY_MALAYSIA",
+		"SUBLANG_NORWEGIAN_BOKMAL",
+		"SUBLANG_PORTUGUESE_BRAZILIAN",
+		"SUBLANG_SPANISH",
+		"SUBLANG_SWEDISH",
+		"SUBLANG_URDU_PAKISTAN",
+		"SUBLANG_UZBEK_LATIN",
+		"SUBLANG_ROMANIAN",
+		"SUBLANG_RUSSIAN",
+		"SUBLANG_CROATIAN",
+		"SUBLANG_GAELIC"},
+	2: {"SUBLANG_SYS_DEFAULT",
+		"SUBLANG_ARABIC_IRAQ",
+		"SUBLANG_AZERI_CYRILLIC",
+		"SUBLANG_CHINESE_SIMPLIFIED",
+		"SUBLANG_DUTCH_BELGIAN",
+		"SUBLANG_ENGLISH_UK",
+		"SUBLANG_FRENCH_BELGIAN",
+		"SUBLANG_GERMAN_SWISS",
+		"SUBLANG_ITALIAN_SWISS",
+		"SUBLANG_KASHMIRI_SASIA",
+		"SUBLANG_KASHMIRI_INDIA",
+		"SUBLANG_MALAY_BRUNEI_DARUSSALAM",
+		"SUBLANG_NEPALI_INDIA",
+		"SUBLANG_NORWEGIAN_NYNORSK",
+		"SUBLANG_PORTUGUESE",
+		"SUBLANG_SERBIAN_LATIN",
+		"SUBLANG_SPANISH_MEXICAN",
+		"SUBLANG_SWEDISH_FINLAND",
+		"SUBLANG_URDU_INDIA",
+		"SUBLANG_UZBEK_CYRILLIC",
+		"SUBLANG_ROMANIAN_MOLDAVIA",
+		"SUBLANG_RUSSIAN_MOLDAVIA",
+		"SUBLANG_LITHUANIAN_CLASSIC",
+		"SUBLANG_GAELIC_SCOTTISH"},
+	3: {"SUBLANG_ARABIC_EGYPT",
+		"SUBLANG_CHINESE_HONGKONG",
+		"SUBLANG_ENGLISH_AUS",
+		"SUBLANG_FRENCH_CANADIAN",
+		"SUBLANG_GERMAN_AUSTRIAN",
+		"SUBLANG_SERBIAN_CYRILLIC",
+		"SUBLANG_SPANISH_MODERN",
+		"SUBLANG_DUTCH_SURINAM",
+		"SUBLANG_GAELIC_MANX"},
+	4: {"SUBLANG_ARABIC_LIBYA",
+		"SUBLANG_CHINESE_SINGAPORE",
+		"SUBLANG_ENGLISH_CAN",
+		"SUBLANG_FRENCH_SWISS",
+		"SUBLANG_GERMAN_LUXEMBOURG",
+		"SUBLANG_SPANISH_GUATEMALA"},
+	5: {"SUBLANG_ARABIC_ALGERIA",
+		"SUBLANG_CHINESE_MACAU",
+		"SUBLANG_ENGLISH_NZ",
+		"SUBLANG_FRENCH_LUXEMBOURG",
+		"SUBLANG_GERMAN_LIECHTENSTEIN",
+		"SUBLANG_SPANISH_COSTA_RICA"},
+	6: {"SUBLANG_ARABIC_MOROCCO",
+		"SUBLANG_ENGLISH_EIRE",
+		"SUBLANG_FRENCH_MONACO",
+		"SUBLANG_SPANISH_PANAMA"},
+	7: {"SUBLANG_ARABIC_TUNISIA",
+		"SUBLANG_ENGLISH_SOUTH_AFRICA",
+		"SUBLANG_SPANISH_DOMINICAN_REPUBLIC"},
+	8: {"SUBLANG_ARABIC_OMAN",
+		"SUBLANG_ENGLISH_JAMAICA",
+		"SUBLANG_SPANISH_VENEZUELA"},
+	9: {"SUBLANG_ARABIC_YEMEN",
+		"SUBLANG_ENGLISH_CARIBBEAN",
+		"SUBLANG_SPANISH_COLOMBIA"},
+	10: {"SUBLANG_ARABIC_SYRIA",
+		"SUBLANG_ENGLISH_BELIZE",
+		"SUBLANG_SPANISH_PERU"},
+	11: {"SUBLANG_ARABIC_JORDAN",
+		"SUBLANG_ENGLISH_TRINIDAD",
+		"SUBLANG_SPANISH_ARGENTINA"},
+	12: {"SUBLANG_ARABIC_LEBANON",
+		"SUBLANG_ENGLISH_ZIMBABWE",
+		"SUBLANG_SPANISH_ECUADOR"},
+	13: {"SUBLANG_ARABIC_KUWAIT",
+		"SUBLANG_ENGLISH_PHILIPPINES",
+		"SUBLANG_SPANISH_CHILE"},
+	14: {"SUBLANG_ARABIC_UAE", "SUBLANG_SPANISH_URUGUAY"},
+	15: {"SUBLANG_ARABIC_BAHRAIN", "SUBLANG_SPANISH_PARAGUAY"},
+	16: {"SUBLANG_ARABIC_QATAR", "SUBLANG_SPANISH_BOLIVIA"},
+	17: {"SUBLANG_SPANISH_EL_SALVADOR"},
+	18: {"SUBLANG_SPANISH_HONDURAS"},
+	19: {"SUBLANG_SPANISH_NICARAGUA"},
+	20: {"SUBLANG_SPANISH_PUERTO_RICO"},
+}
+
+type ResourceType uint32
+
+const (
+	RtCursor       ResourceType = 1
+	RtBitmap       ResourceType = 2
+	RtIcon         ResourceType = 3
+	RtMenu         ResourceType = 4
+	RtDialog       ResourceType = 5
+	RtString       ResourceType = 6
+	RtFontDir      ResourceType = 7
+	RtFont         ResourceType = 8
+	RtAccelerator  ResourceType = 9
+	RtRcdata       ResourceType = 10
+	RtMessageTable ResourceType = 11
+	RtGroupCursor  ResourceType = 12
+	RtGroupIcon    ResourceType = 14
+	RtVersion      ResourceType = 16
+	RtDlgInclude   ResourceType = 17
+	RtPlugPlay     ResourceType = 19
+	RtVxd          ResourceType = 20
+	RtAniCursor    ResourceType = 21
+	RtAniIcon      ResourceType = 22
+	RtHtml         ResourceType = 23
+	RtManifest     ResourceType = 24
+)
+
+func (r ResourceType) String() string {
+	switch r {
+	case RtCursor:
+		return "RT_CURSOR"
+	case RtBitmap:
+		return "RT_BITMAP"
+	case RtIcon:
+		return "RT_ICON"
+	case RtMenu:
+		return "RT_MENU"
+	case RtDialog:
+		return "RT_DIALOG"
+	case RtString:
+		return "RT_STRING"
+	case RtFontDir:
+		return "RT_FONTDIR"
+	case RtFont:
+		return "RT_FONT"
+	case RtAccelerator:
+		return "RT_ACCELERATOR"
+	case RtRcdata:
+		return "RT_RCDATA"
+	case RtMessageTable:
+		return "RT_MESSAGETABLE"
+	case RtGroupCursor:
+		return "RT_GROUP_CURSOR"
+	case RtGroupIcon:
+		return "RT_GROUP_ICON"
+	case RtVersion:
+		return "RT_VERSION"
+	case RtDlgInclude:
+		return "RT_DLGINCLUDE"
+	case RtPlugPlay:
+		return "RT_PLUGPLAY"
+	case RtVxd:
+		return "RT_VXD"
+	case RtAniCursor:
+		return "RT_ANICURSOR"
+	case RtAniIcon:
+		return "RT_ANIICON"
+	case RtHtml:
+		return "RT_HTML"
+	case RtManifest:
+		return "RT_MANIFEST"
+	}
+	return ""
+}
