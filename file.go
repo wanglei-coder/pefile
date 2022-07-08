@@ -19,7 +19,7 @@ type File struct {
 	RichHeader *RichHeader
 	COFF       *COFF
 	Imports    []*Import
-	Resources  *ResourceDirectory
+	Resources  ResourceDirectory
 	GlobalPtr  uint32
 	Header     []byte
 

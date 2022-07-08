@@ -72,14 +72,14 @@ func (f *File) parseResourceDirectoryEntry(rva uint32) *ImageResourceDirectoryEn
 	return &resource
 }
 
-func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs []uint32) (*ResourceDirectory, error) {
+func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs []uint32) (ResourceDirectory, error) {
 
 	var resourceDir ImageResourceDirectory
 	resourceDirSize := uint32(binary.Size(resourceDir))
 	offset := f.getOffsetFromRva(rva)
 	err := f.structUnpack(&resourceDir, offset, resourceDirSize)
 	if err != nil {
-		return nil, err
+		return ResourceDirectory{}, err
 	}
 
 	if baseRVA == 0 {
@@ -96,7 +96,7 @@ func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs [
 	var dirEntries []ResourceDirectoryEntry
 
 	if numberOfEntries > maxAllowedEntries {
-		return nil, nil
+		return ResourceDirectory{}, nil
 	}
 
 	for i := 0; i < numberOfEntries; i++ {
@@ -131,18 +131,22 @@ func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs [
 
 			level++
 			dirs = append(dirs, baseRVA+OffsetToDirectory)
-			directoryEntry, _ := f.doParseResourceDirectory(
+			directoryEntry, err := f.doParseResourceDirectory(
 				baseRVA+OffsetToDirectory,
 				size-(rva-baseRVA),
 				baseRVA,
 				level,
 				dirs)
 
+			if err != nil {
+				continue
+			}
+
 			dirEntries = append(dirEntries, ResourceDirectoryEntry{
 				Struct:    *res,
 				Name:      entryName,
 				ID:        entryID,
-				Directory: *directoryEntry})
+				Directory: directoryEntry})
 		} else {
 			dataEntryStruct, err := f.parseResourceDataEntry(baseRVA + OffsetToDirectory)
 			if err != nil {
@@ -164,12 +168,12 @@ func (f *File) doParseResourceDirectory(rva, size, baseRVA, level uint32, dirs [
 		rva += uint32(binary.Size(res))
 	}
 
-	return &ResourceDirectory{Struct: resourceDir, Entries: dirEntries}, nil
+	return ResourceDirectory{Struct: resourceDir, Entries: dirEntries}, nil
 }
 
-func (f *File) readResourceDirectory() (*ResourceDirectory, error) {
+func (f *File) readResourceDirectory() (ResourceDirectory, error) {
 	if f.OptionalHeader == nil {
-		return nil, nil
+		return ResourceDirectory{}, nil
 	}
 
 	var rva, size uint32
